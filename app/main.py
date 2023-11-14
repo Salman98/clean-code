@@ -8,6 +8,7 @@ from app.core.container import Container
 
 import app.core.expections_handler as expections_handler
 from app.util.class_object import singleton
+###
 
 
 @singleton

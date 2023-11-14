@@ -19,7 +19,7 @@ class Configs(BaseSettings):
     ENV_DATABASE_MAPPER: dict = {
         "prod": "fca",
         "stage": "stage-fca",
-        "dev": "dev-fca",
+        "dev": "clean_code",
         "test": "test-fca",
     }
     DB_ENGINE_MAPPER: dict = {
@@ -27,7 +27,8 @@ class Configs(BaseSettings):
         "mysql": "mysql+pymysql",
     }
 
-    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    PROJECT_ROOT: str = os.path.dirname(os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))))
 
     # date
     DATETIME_FORMAT: str = "%Y-%m-%dT%H:%M:%S"
@@ -35,16 +36,18 @@ class Configs(BaseSettings):
 
     # auth
     SECRET_KEY: str = os.getenv("SECRET_KEY", "")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 60 minutes * 24 hours * 30 days = 30 days
+    # 60 minutes * 24 hours * 30 days = 30 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30
 
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
 
     # database
     DB: str = os.getenv("DB", "postgresql")
-    DB_USER: str = os.getenv("DB_USER")
-    DB_PASSWORD: str = os.getenv("DB_PASSWORD")
-    DB_HOST: str = os.getenv("DB_HOST")
+    DATABASE: str = os.getenv("DATABASE", "test")
+    DB_USER: str = os.getenv("DB_USER")  # type: ignore
+    DB_PASSWORD: str = os.getenv("DB_PASSWORD")  # type: ignore
+    DB_HOST: str = os.getenv("DB_HOST")  # type: ignore
     DB_PORT: str = os.getenv("DB_PORT", "3306")
     DB_ENGINE: str = DB_ENGINE_MAPPER.get(DB, "postgresql")
 
@@ -56,7 +59,7 @@ class Configs(BaseSettings):
         password=DB_PASSWORD,
         host=DB_HOST,
         port=DB_PORT,
-        database=ENV_DATABASE_MAPPER[ENV],
+        database=DATABASE,
     )
 
     # find query

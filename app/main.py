@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api.v1.routes import routers as v1_routers
 from app.api.v2.routes import routers as v2_routers
 from app.core.config import configs
 from app.core.container import Container
+
+import app.core.expections_handler as expections_handler
 from app.util.class_object import singleton
 
 
@@ -27,7 +29,8 @@ class AppCreator:
         if configs.BACKEND_CORS_ORIGINS:
             self.app.add_middleware(
                 CORSMiddleware,
-                allow_origins=[str(origin) for origin in configs.BACKEND_CORS_ORIGINS],
+                allow_origins=[str(origin)
+                               for origin in configs.BACKEND_CORS_ORIGINS],
                 allow_credentials=True,
                 allow_methods=["*"],
                 allow_headers=["*"],
@@ -46,3 +49,10 @@ app_creator = AppCreator()
 app = app_creator.app
 db = app_creator.db
 container = app_creator.container
+
+# Exception handler
+
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    return await expections_handler.handle_expections(request, exc)

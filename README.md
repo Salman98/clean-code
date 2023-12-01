@@ -1,4 +1,4 @@
-# fastapi-clean-architecture
+# fastapi-clean-onion-architecture
 
 ## description
 Base FastAPI project for applying general RestAPI Application cases.
@@ -59,6 +59,7 @@ Base FastAPI project for applying general RestAPI Application cases.
 ```dotenv
 # mysql case
 ENV=dev
+DATABASE=test_database
 DB=mysql
 DB_USER=root
 DB_PASSWORD=qwer1234
@@ -67,6 +68,7 @@ DB_PORT=3306
 
 # postgres case
 ENV=dev
+DATABASE=test_databasef
 DB=postgresql
 DB_USER=gyu
 DB_PASSWORD=

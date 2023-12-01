@@ -17,10 +17,9 @@ class Configs(BaseSettings):
     API_V2_STR: str = "/api/v2"
     PROJECT_NAME: str = "fca-api"
     ENV_DATABASE_MAPPER: dict = {
-        "prod": "fca",
-        "stage": "stage-fca",
-        "dev": "clean_code",
-        "test": "test-fca",
+        "dev": "test_code",
+        "stage": "test_code",
+        "prod": "test_code"
     }
     DB_ENGINE_MAPPER: dict = {
         "postgresql": "postgresql",
@@ -44,7 +43,8 @@ class Configs(BaseSettings):
 
     # database
     DB: str = os.getenv("DB", "postgresql")
-    DATABASE: str = os.getenv("DATABASE", "test")
+    ENV: str = os.getenv("ENV", "dev")
+    DATABASE: str = ENV_DATABASE_MAPPER.get(ENV, "test")
     DB_USER: str = os.getenv("DB_USER")  # type: ignore
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")  # type: ignore
     DB_HOST: str = os.getenv("DB_HOST")  # type: ignore
